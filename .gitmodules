@@ -1,0 +1,3 @@
+[submodule "backend/_docs/backend_best_practices"]
+	path = backend/_docs/backend_best_practices
+	url = https://github.com/techwithty/backend_best_practices.git
