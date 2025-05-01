@@ -29,15 +29,15 @@ To perform massive key deletion in Redis without impacting performance, use eith
     Use -i option so you don’t block the execution of the shard
     Use UNLINK, so you execute tasks in the background
 
-  -i <interval>      
-    When -r is used, waits <interval> seconds per command.                     
-    It is possible to specify sub-second times like -i 0.1.
+-i <interval>  
+ When -r is used, waits <interval> seconds per command.  
+ It is possible to specify sub-second times like -i 0.1.
 
 Copy code
 
 So an example using the command would be:
 
-redis-cli -p <PORT> --scan --pattern city:* -i 0.01 | xargs redis-cli -p <PORT> unlink
+redis-cli -p <PORT> --scan --pattern city:\* -i 0.01 | xargs redis-cli -p <PORT> unlink
 
 Copy code
 
@@ -47,7 +47,7 @@ man xargs
 
 [...]
 
--L number   Call utility for every number non-empty lines read.
+-L number Call utility for every number non-empty lines read.
 
 Copy code
 
