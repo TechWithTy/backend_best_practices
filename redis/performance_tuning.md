@@ -114,3 +114,67 @@ redis-cli -h <hostname> -p <port> -a <password> --bigkeys
 Copy code
 
 You could also have a hot key. To identify that, you could run the MONITOR command for a very short monitor period of time (a few seconds) in a low-traffic period. Please note that this command is dangerous and can affect latency. Please run it for a very short period of time and test it out first on a dev DB or other low-traffic non-production DB. Read more about the MONITOR command.
+
+# Optimized Redis Patterns
+
+## Cache Invalidation
+- Uses SCAN + batch deletion (100 keys/batch)
+- Circuit breaking after 3 failures
+- Metrics for monitoring
+
+## Rate Limiting
+- Sliding window algorithm
+- Atomic operations via pipelines
+- Precise burst protection
+
+## Key Design
+```
+# Good
+user:{id}:profile
+edge_func:{user_id}:{func_name}
+
+# Avoid
+userprofile_*
+all_edge_functions
+
+## Redis Cluster
+- Uses `RedisCluster` client when enabled
+- Automatic key distribution
+- Retries failed nodes
+
+## Cache Warming
+1. Call during service startup
+2. Run periodically for hot data
+3. Example:
+```python
+await warm_cache(
+    keys=[f"user:{id}" for id in active_users],
+    loader=get_user_data,
+    ttl=3600
+)
+
+```
+
+## Cluster Failure Recovery
+
+### Automatic Recovery
+1. Node reconnection attempts every 5s
+2. Read replicas promoted for failed masters
+3. Client-side routing table updates
+
+### Manual Steps
+```bash
+# Check cluster status
+redis-cli --cluster check {host}:{port}
+
+# Failover master
+redis-cli --cluster failover {node-id}
+
+# Reshard slots
+redis-cli --cluster reshard {host}:{port}
+```
+
+### Monitoring
+- Track `CLUSTERDOWN` events
+- Alert on replica count changes
+- Watch redirected commands metric
