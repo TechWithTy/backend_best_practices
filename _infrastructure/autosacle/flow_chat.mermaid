@@ -1,0 +1,51 @@
+flowchart TD
+    classDef client fill:#f9f,stroke:#333,color:#000
+    classDef broker fill:#bbf,stroke:#333,color:#000
+    classDef worker fill:#bfb,stroke:#333,color:#000
+    classDef scaler fill:#ffb,stroke:#333,color:#000
+    classDef monitor fill:#ff9,stroke:#333,color:#000
+
+    subgraph Clients["Client Applications"]
+        C1[Producer]:::client
+        C2[Consumer]:::client
+    end
+
+    subgraph BrokerLayer["Message Brokers"]
+        R[Redis/Valkey]:::broker
+        P[Pulsar]:::broker
+    end
+
+    subgraph WorkerLayer["Worker Components"]
+        CW[Celery Workers]:::worker
+        PW[Pulsar Consumers]:::worker
+    end
+
+    subgraph ScalingLayer["Scaling Controllers"]
+        K[KEDA]:::scaler
+        V[VPA]:::scaler
+    end
+
+    subgraph MonitorLayer["Monitoring System"]
+        PR[Prometheus]:::monitor
+        OT[OpenTelemetry]:::monitor
+    end
+
+    %% Message Flow
+    C1 -->|"Tasks"| R
+    R -->|"Queue Length"| CW
+    C2 -->|"Messages"| P
+    P -->|"Backlog"| PW
+
+    %% Scaling Triggers
+    R -.->|"listLength > threshold"| K
+    P -.->|"backlog > threshold"| K
+    CW -.->|"CPU/Memory Usage"| V
+    PW -.->|"CPU/Memory Usage"| V
+
+    %% Monitoring Feedback
+    CW -->|"Metrics"| PR
+    PW -->|"Metrics"| PR
+    CW -->|"Traces"| OT
+    PW -->|"Traces"| OT
+    PR -.->|"Metrics"| K
+    OT -.->|"Metrics"| K
