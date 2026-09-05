@@ -1,0 +1,22 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+# Infisical Configuration
+infisical_client_id     = "your-machine-identity-client-id"
+infisical_client_secret = "your-machine-identity-client-secret"
+project_id              = "your-project-id"
+project_slug            = "your-project-slug"
+environment             = "prod"
+
+# PostgreSQL Configuration
+enable_postgres_dynamic = true
+postgres_host           = "your-postgres-host.com"
+postgres_port           = "5432"
+postgres_database       = "myapp"
+postgres_default_ttl    = "2h"
+postgres_max_ttl        = "4h"
+
+# Optional: PostgreSQL SSL certificate for secure connections
+postgres_ca_cert = ""
+
+# Note: Database admin credentials (DB_ADMIN_USER and DB_ADMIN_PASS) 
+# must be stored in Infisical at /database/admin/ path before running terraform apply

@@ -1,0 +1,17 @@
+infisical:
+  address: "https://app.infisical.com"
+auth:
+  type: "universal-auth"
+  config:
+    client-id: "/run/secrets/infisical-universal-auth-client-id"
+    client-secret: "/run/secrets/infisical-universal-auth-client-secret"
+    remove_client_secret_on_read: false
+sinks:
+  - type: "file"
+    config:
+      path: "/infisical-secrets/access-token"
+templates:
+  - source-path: /run/secrets/nginx-home-page-template
+    destination-path: /infisical-secrets/index.html
+    config:
+      polling-interval: 60s

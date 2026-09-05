@@ -1,0 +1,76 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+# Infisical Configuration
+infisical_client_id     = "your-machine-identity-client-id"
+infisical_client_secret = "your-machine-identity-client-secret"
+project_id              = "your-project-id"
+environment             = "prod"
+
+# MySQL Rotation Configuration
+enable_mysql_rotation = false
+mysql_host            = "mysql.example.com"
+mysql_port            = 3306
+mysql_database        = "myapp"
+mysql_admin_user      = "admin"
+mysql_admin_password  = "secure-admin-password"
+
+# MySQL users (must already exist in database)
+mysql_username1         = "app_user_primary"
+mysql_username2         = "app_user_secondary"
+mysql_initial_password1 = "initial-password-1"
+mysql_initial_password2 = "initial-password-2"
+
+mysql_ssl_mode               = "required"
+mysql_ca_cert                = ""
+mysql_auto_rotation_enabled  = true
+mysql_rotation_interval_days = 30
+mysql_rotation_hour_utc       = 2
+
+# AWS IAM Rotation Configuration
+enable_aws_rotation   = false
+aws_access_key_id     = "AKIA..."
+aws_secret_access_key = "your-secret-key"
+aws_region            = "us-east-1"
+
+# AWS IAM user to rotate
+aws_iam_username            = "app-user"
+aws_iam_initial_access_key  = "AKIA..."
+aws_iam_initial_secret_key  = "initial-secret-key"
+
+aws_auto_rotation_enabled  = true
+aws_rotation_interval_days = 30
+aws_rotation_hour_utc       = 3
+
+# PostgreSQL Rotation Configuration
+enable_postgres_rotation = false
+postgres_host            = "postgres.example.com"
+postgres_port            = 5432
+postgres_database        = "myapp"
+postgres_admin_user      = "postgres"
+postgres_admin_password  = "secure-admin-password"
+
+# PostgreSQL users (must already exist in database)
+postgres_username1         = "app_user_primary"
+postgres_username2         = "app_user_secondary"
+postgres_initial_password1 = "initial-password-1"
+postgres_initial_password2 = "initial-password-2"
+
+postgres_ssl_mode               = "require"
+postgres_auto_rotation_enabled  = true
+postgres_rotation_interval_days = 30
+postgres_rotation_hour_utc       = 2
+
+# Azure Rotation Configuration
+enable_azure_rotation = false
+azure_tenant_id       = "your-tenant-id"
+azure_client_id       = "your-client-id"
+azure_client_secret   = "your-client-secret"
+
+# Azure app to rotate secrets for
+azure_target_app_object_id  = "target-app-object-id"
+azure_target_client_id      = "target-client-id"
+azure_initial_client_secret = "initial-client-secret"
+
+azure_auto_rotation_enabled  = true
+azure_rotation_interval_days = 30
+azure_rotation_hour_utc       = 4

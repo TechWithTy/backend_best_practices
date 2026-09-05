@@ -1,0 +1,34 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+# Infisical Configuration
+infisical_client_id     = "your-machine-identity-client-id"
+infisical_client_secret = "your-machine-identity-client-secret"
+infisical_host          = "https://app.infisical.com"  # or your self-hosted URL
+
+# Project Configuration
+project_name = "my-app"
+project_slug = "my-app"
+environments = ["dev", "staging", "prod"]
+
+# Stripe Configuration (optional)
+stripe_prod_key = "sk_live_..."
+stripe_test_key = "sk_test_..."
+
+# Optional: Machine Identity Configuration
+create_machine_identities = false                    # Set to true to create CI/CD identities
+organization_id           = "your-organization-id"   # Required if creating identities
+
+# Optional: Service identities for applications
+services = {
+  api = {
+    description = "Main API service"
+  }
+  worker = {
+    description = "Background worker service"
+  }
+}
+
+# Optional: Restrict CI/CD access by IP (default allows all)
+ci_cd_trusted_ips = [
+  { ip_address = "0.0.0.0/0" }  # Allow from anywhere - restrict in production
+]

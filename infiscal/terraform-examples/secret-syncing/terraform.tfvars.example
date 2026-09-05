@@ -1,0 +1,31 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+# Infisical Configuration
+infisical_client_id     = "your-machine-identity-client-id"
+infisical_client_secret = "your-machine-identity-client-secret"
+project_id              = "your-project-id"
+project_name            = "myapp"
+environment             = "prod"
+
+# AWS Sync Configuration
+enable_aws_sync      = true
+use_aws_access_keys  = false  # Set to true to use access keys instead of IAM role
+aws_role_arn         = "arn:aws:iam::123456789012:role/InfisicalSecretsManagerRole"
+aws_region           = "us-east-1"
+aws_sync_secret_path = "/api"
+aws_kms_key_id       = ""  # Optional KMS encryption
+
+# Alternative: AWS Access Keys (not recommended for production)
+# aws_access_key_id     = "AKIA..."
+# aws_secret_access_key = "your-secret-key"
+
+# GitHub Sync Configuration
+enable_github_sync       = true
+github_connection_id     = "your-github-connection-id"  # Create in Infisical UI first
+github_owner             = "my-org"
+github_repository        = "my-app"
+github_sync_secret_path  = "/ci-cd"
+
+# Note: 
+# 1. For AWS, create IAM role with SecretsManager permissions or provide access keys
+# 2. For GitHub, create app connection through Infisical UI first, then copy the connection ID

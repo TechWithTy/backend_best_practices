@@ -1,0 +1,21 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+# Infisical Configuration
+infisical_client_id     = "your-machine-identity-client-id"
+infisical_client_secret = "your-machine-identity-client-secret"
+project_id              = "your-project-id"
+environment             = "prod"
+
+# Your secret values
+stripe_secret_key = "sk_live_..."
+sendgrid_api_key  = "SG...."
+db_password       = "your-secure-database-password"
+
+# Database configuration
+db_host = "your-postgres-host.com"
+db_port = "5432"
+db_name = "myapp"
+db_user = "app_user"
+
+# Optional: Create Kubernetes resources for demonstration
+create_kubernetes_resources = false
