@@ -106,6 +106,22 @@ kubectl delete -k backend/deploy/kubernetes
 Do not use `kubectl delete namespace` for routine cleanup; it removes every
 resource in that namespace.
 
+## When No Cluster Is Available
+
+Manifest validation and application testing are separate concerns. If local
+Kubernetes cannot start because of disk or resource limits, render the
+Kustomize bundle and parse the YAML without creating a cluster:
+
+```powershell
+kubectl kustomize backend/deploy/kubernetes
+python -c "import yaml, pathlib; [list(yaml.safe_load_all(p.read_text())) for p in pathlib.Path('backend/deploy/kubernetes').glob('*.yaml')]; print('YAML valid')"
+```
+
+Build and smoke-test the Docker images, then run the API and frontend locally
+for behavioral verification. `kubectl apply --dry-run=client` can still try to
+contact the configured API server for discovery and is not a reliable offline
+validation command; use `kubectl kustomize` plus a YAML parser instead.
+
 ## Automation Rules
 
 - Use `--dry-run` and explicit namespaces in scripts.
